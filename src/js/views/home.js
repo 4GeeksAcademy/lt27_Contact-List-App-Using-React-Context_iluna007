@@ -1,7 +1,9 @@
 import React, {useContext, } from "react";
+import { Link } from "react-router-dom";
 import {Context} from "../store/appContext";
 import rigoImage from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+
 
 export const Home = () => {
 	console.log('Este es el Home')

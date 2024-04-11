@@ -10,10 +10,15 @@ export const Navbar = () => {
 				<span className="navbar-brand mb-0 h1">React Boilerplate</span>
 			</Link>
 			<div className="ml-auto">
-				
 				{store.titulo}
-				<Link to="/demo">
-					<button className="btn btn-primary">Check the Context in action</button>
+				<Link to="/contacts">
+					<button className="btn btn-primary">Contacts</button>
+				</Link>
+				<Link to="/newcontact">
+					<button className="btn btn-success">Add new contact</button>
+				</Link>
+				<Link to="/home">
+					<button className="btn btn-secondary">home</button>
 				</Link>
 			</div>
 		</nav>

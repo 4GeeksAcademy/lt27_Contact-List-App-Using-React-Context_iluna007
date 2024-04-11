@@ -27,6 +27,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					address: "calle 123124 ",
 					email: "aaa@asdasd.com"
 				},
+				{
+					name: "Carlos",
+					phone: "84136551",
+					address: "calle luci 124 ",
+					email: "dsd@hotmail.com"
+				},
 				
 			],
 			titulo: 'Este es el titulo desde flux'
@@ -40,8 +46,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log('Hola desde flux');
 			},
 			eliminar:(indexToDelete) => {
+				const store = getStore();
 				console.log("eliminado", indexToDelete);
-				console.loog(store.contacts.filter((contact, contactIndex)=>contactIndex!=indexToDelete));
+				setStore({ contacts: 
+					store.contacts.filter(
+						(contact, contactIndex) => 
+						contactIndex !== indexToDelete) });
 			},
 			editar:() => {
 				console.log("editando");
@@ -54,6 +64,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
+				console.log('cargando datos');
+				/**
+				 fetch('')
+				 .then((response)=>response.json())
+				 .then((data)=>console.log(data.contacts))
+				 setStore({ contacts: data.contacts });
+				 */
 			},
 			changeColor: (index, color) => {
 				//get the store

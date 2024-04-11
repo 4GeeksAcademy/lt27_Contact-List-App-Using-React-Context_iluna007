@@ -5,7 +5,7 @@ import { Context } from "../store/appContext";
 
 import "../../styles/demo.css";
 
-export const Demo = () => {
+export const Contacts = () => {
   const { store, actions } = useContext(Context);
   
   return (
@@ -60,7 +60,7 @@ export const Demo = () => {
         })}
       </ul>
       <br />
-      <Link to="/">
+      <Link to="/home">
         <button className="btn btn-primary">Back home</button>
       </Link>
     </div>
