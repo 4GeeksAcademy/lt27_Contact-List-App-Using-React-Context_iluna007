@@ -1,28 +1,36 @@
-import React, {useContext, } from "react";
-import { Link } from "react-router-dom";
-import {Context} from "../store/appContext";
-import rigoImage from "../../img/rigo-baby.jpg";
-import "../../styles/home.css";
-
+import React, { useContext, useState } from 'react';
+import { Context } from '../store/appContext';
 
 export const Home = () => {
-	console.log('Este es el Home')
-	const {store, actions} = useContext(Context)
-	console.log(store)
-	console.log(store.demo)
-	actions.printText()
+  const { store, actions } = useContext(Context);
+  const [newuser, setNewUser] = useState('');
 
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo home!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button, bootstrap is working
-			</a>
-			<button onClick={actions.updateTitle}>Cambiar titulo</button>
-		</div>
-	);
+  console.log(store);
+  console.log(store.demo);
+  actions.printText();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    actions.crearAgenda(newuser);
+  }
+
+  return (
+    <div className="text-center mt-5">
+      <h1>Please submit a new name</h1>
+      <div className="container">
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <input
+              type="fullname"
+              className="form-control"
+              id="newAgenda"
+              value={newuser}
+              onChange={(e) => setNewUser(e.target.value)}
+            />
+            <button className="btn btn-success">Add new Agenda</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
-

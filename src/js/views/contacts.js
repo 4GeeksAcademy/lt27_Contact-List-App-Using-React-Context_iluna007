@@ -7,7 +7,7 @@ import "../../styles/demo.css";
 
 export const Contacts = () => {
   const { store, actions } = useContext(Context);
-  
+
   return (
     <div className="container">
       <ul className="list-group">
@@ -41,7 +41,10 @@ export const Contacts = () => {
         })}
         {store.contacts.map((item, index) => {
           return (
-            <li key={index} className="list-group-item d-flex justify-content-between">
+            <li
+              key={index}
+              className="list-group-item d-flex justify-content-between"
+            >
               {item.name}
               <br></br>
               {item.phone}
@@ -52,15 +55,18 @@ export const Contacts = () => {
               <br></br>
               {index}
               <div>
-				<button onClick={()=>actions.eliminar(index)}> Eliminar </button>
-				<button onClick={()=>actions.editar(index)}> Editar </button>
-			  </div>
+                <button onClick={() => actions.eliminar(index)}>
+                  {" "}
+                  Eliminar{" "}
+                </button>
+                <button onClick={() => actions.editar(index)}> Editar </button>
+              </div>
             </li>
           );
         })}
       </ul>
       <br />
-      <Link to="/home">
+      <Link to="/">
         <button className="btn btn-primary">Back home</button>
       </Link>
     </div>
