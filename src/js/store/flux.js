@@ -34,16 +34,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           email: "dsd@hotmail.com",
         },
       ],
-      titulo: "Este es el titulo desde flux",
+      titulo: "",
     },
     actions: {
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
         getActions().changeColor(0, "green");
       },
-      printText: () => {
-        console.log("Hola desde flux");
-      },
+      printText: () => {},
       eliminar: (indexToDelete) => {
         const store = getStore();
         console.log("eliminado", indexToDelete);
@@ -56,25 +54,47 @@ const getState = ({ getStore, getActions, setStore }) => {
       editar: () => {
         console.log("editando");
       },
-      crearAgenda: (newuser) => {
-		console.log("Agenda creada");
-		const requestOptions = {
-		  method: "POST",
-		  redirect: "follow",
-		  headers: {
-			"Content-Type": "text/plain",
-		  },
-		  body: JSON.stringify({}),
-		};
-		
-		fetch(`https://playground.4geeks.com/contact/agendas/${newuser}`, requestOptions)
-		  .then((response) => response.text())
-		  .then((result) => console.log(result))
-		  .catch((error) => console.error(error));
-	  },
-      updateTitle: () => {
-        console.log("confirmando accion");
-        setStore({ titulo: "nuevotitulo" });
+      createAgenda: (newuser) => {
+        console.log("Agenda creada");
+        const requestOptions = {
+          method: "POST",
+          redirect: "follow",
+          headers: {
+            "Content-Type": "text/plain",
+          },
+          body: JSON.stringify({}),
+        };
+
+        fetch(
+          `https://playground.4geeks.com/contact/agendas/${newuser}`,
+          requestOptions
+        )
+          .then((response) => response.text())
+          .then((result) => {
+            console.log(result);
+            setStore({ titulo: newuser });
+          })
+          .catch((error) => console.error(error));
+      },
+      deleteAgenda: (user) => {
+        console.log("borrando agenda");
+        const requestOptions = {
+          method: "DELETE",
+          redirect: "follow",
+          headers: {
+            "Content-Type": "text/plain",
+          },
+          body: JSON.stringify({}),
+        };
+        
+        fetch(`https://playground.4geeks.com/contact/agendas/${user}`, 
+        requestOptions)
+          .then((response) => response.text())
+          .then((result) => {
+            console.log(result);
+            console.log(`se borro ${user}`)
+          })
+          .catch((error) => console.error(error));
       },
       loadSomeData: () => {
         /**
