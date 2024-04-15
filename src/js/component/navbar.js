@@ -15,7 +15,8 @@ export const Navbar = () => {
 					<button className="btn btn-success">Add new contact</button>
 				</Link>
 				<Link to="/contacts">
-					<button className="btn btn-primary">Contacts</button>
+					<button className="btn btn-primary"
+					>Contacts</button>
 				</Link>
 				<Link to="/">
 					<button className="btn btn-secondary">home</button>

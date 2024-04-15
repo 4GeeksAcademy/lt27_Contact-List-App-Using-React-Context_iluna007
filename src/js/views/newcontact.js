@@ -4,11 +4,7 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
 export const Newcontact = () => {
-  console.log("Este es el newcontact");
   const { store, actions } = useContext(Context);
-  console.log(store);
-  console.log(store.demo);
-  actions.printText();
 
   return (
     <div className="text-start mt-5">
@@ -23,6 +19,7 @@ export const Newcontact = () => {
               type="fullname"
               className="form-control"
               id="exampleInputFullName"
+              value={store.contacts.name}
             />
           </div>
           <div className="mb-3">
@@ -34,6 +31,7 @@ export const Newcontact = () => {
               className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
+              value={store.contacts.email}
             />
           </div>
           <div className="mb-3">
@@ -44,6 +42,7 @@ export const Newcontact = () => {
               type="phone"
               className="form-control"
               id="exampleInputPhone1"
+              value={store.contacts.phone}
             />
           </div>
           <div className="mb-3">
@@ -56,9 +55,9 @@ export const Newcontact = () => {
               id="exampleInputAdress"
             />
           </div>
-          <a href="#" className="btn btn-success">
+          <button className="btn btn-success">
             save
-          </a>
+          </button>
           <Link to="/contacts">
             <button className="btn btn-primary">or get back to contacts</button>
           </Link>

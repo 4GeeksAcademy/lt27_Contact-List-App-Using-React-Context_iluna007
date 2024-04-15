@@ -21,20 +21,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           address: "calle 123",
           email: "ppp@asdasd.com",
         },
-        {
-          name: "Alejandor",
-          phone: "841321315",
-          address: "calle 123124 ",
-          email: "aaa@asdasd.com",
-        },
-        {
-          name: "Carlos",
-          phone: "84136551",
-          address: "calle luci 124 ",
-          email: "dsd@hotmail.com",
-        },
+       
       ],
       titulo: "",
+      agendas: [
+        {
+          slug: "Juan",
+          id: "0",
+        }
+      ],
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -86,13 +81,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
           body: JSON.stringify({}),
         };
-        
-        fetch(`https://playground.4geeks.com/contact/agendas/${user}`, 
-        requestOptions)
+
+        fetch(
+          `https://playground.4geeks.com/contact/agendas/${user}`,
+          requestOptions
+        )
           .then((response) => response.text())
           .then((result) => {
             console.log(result);
-            console.log(`se borro ${user}`)
+            console.log(`se borro ${user}`);
           })
           .catch((error) => console.error(error));
       },
@@ -100,15 +97,32 @@ const getState = ({ getStore, getActions, setStore }) => {
         /**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
-        console.log("cargando datos");
-        /**
-				 fetch('')
-				 .then((response)=>response.json())
-				 .then((data)=>console.log(data.contacts))
-				 setStore({ contacts: data.contacts });
-				 */
+        console.log("cargando !");
+        
       },
-      changeColor: (index, color) => {
+     loadContacts: (newuser) => {
+        const store = getStore(); 
+        console.log("cargando contactos");
+        console.log(store.newuser);
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow",
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        };
+        
+        fetch(
+          `https://playground.4geeks.com/contact/agendas/${newuser}/contacts`,
+          requestOptions
+        )
+          .then((response) => response.text())
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((error) => console.error(error));
+      },
+     changeColor: (index, color) => {
         //get the store
         const store = getStore();
 
@@ -122,8 +136,25 @@ const getState = ({ getStore, getActions, setStore }) => {
         //reset the global store
         setStore({ demo: demo });
       },
+      getAgendas: () => {
+        console.log("getAgendas");
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow"
+        };
+        
+        fetch("https://playground.4geeks.com/contact/agendas", requestOptions)
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
+      },
     },
   };
 };
 
 export default getState;
+
+
+/*
+
+  */
