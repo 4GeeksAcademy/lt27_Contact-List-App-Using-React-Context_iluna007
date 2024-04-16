@@ -17,7 +17,7 @@ export const Home = () => {
 
   return (
     <div className="text-center mt-5">
-      <h1>Please submit a new agenda name</h1>
+      <h1>Please submit a new agenda name:</h1>
       <div className="container">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -29,11 +29,12 @@ export const Home = () => {
               onChange={(e) => setNewUser(e.target.value)}
             />
             <button
-              className="btn btn-success"
+              className="btn btn-outline-success"
               onClick={() => actions.createAgenda}
             >Add
             </button>
           </div>
+          <h1>Or delete it:</h1>
         </form>
         <form onSubmit={handleDelete}>
           <div className="mb-3">
@@ -45,7 +46,7 @@ export const Home = () => {
               onChange={(e) => setUser(e.target.value)}
             />
             <button
-                  className="btn btn-danger"
+                  className="btn btn-outline-danger"
                   onClick={() => actions.deleteAgenda}
                 >Delete
             </button>            

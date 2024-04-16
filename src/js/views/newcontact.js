@@ -24,7 +24,6 @@ export const Newcontact = () => {
 
   return (
     <div className="text-start mt-5">
-      <h1>This is the page to add contacts</h1>
       <div className="container">
          <form>
          <div className="mb-3">
@@ -93,12 +92,18 @@ export const Newcontact = () => {
               name="phone"
             />
           </div>
-          <button onClick={saveContact} className="btn btn-success">
-            save
-          </button>
-          <Link to="/contacts">
-            <button className="btn btn-primary">or get back to contacts</button>
-          </Link>
+          <div className="container text-center row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+              <div className="col">
+                <button onClick={saveContact} className="btn btn-outline-success">
+                  save
+                </button>
+              </div>
+              <div className="col">
+                <Link to="/contacts">
+                  <button className="btn btn-link">or get back to contacts</button>
+                </Link>          
+              </div>
+          </div>
         </form>
       </div>
     </div>
