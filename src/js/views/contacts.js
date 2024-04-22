@@ -2,26 +2,35 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import "../../styles/demo.css";
+
 export const Contacts = () => {
   const { store, actions } = useContext(Context);
-  const [data, setData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    address: "",
-  });
-  const saveContact = (e) => {
-    e.preventDefault();
-    actions.postContact(store.titulo, data);
+  const [currentContact, setCurrentContact] = useState(
+    {
+      name: "",
+      phone: "",
+      email: "",
+      address: "",
+      id: "",
+    },
+  );
+
+  const saveEditedContact = () => {
+    actions.putedit(currentContact);
   };
-  console.log(store.titulo);
+  const deletedContact = () => {
+    actions.eliminar(currentContact);
+  };
   const info = (e) => {
-    setData({
-      ...data,
+    setCurrentContact({
+      ...currentContact,
       [e.target.name]: e.target.value,
     });
   };
 
+  console.log(currentContact)
+
+  
   return (
     <div className="container">
       <ul className="list-group">
@@ -80,6 +89,7 @@ export const Contacts = () => {
                     <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
                   </svg>
                   <p className="text-secondary">{item.email}</p>
+                  <p className="text-secondary">{item.id}</p>
                 </div>
               </div>
               <div className="ms-auto p-3">
@@ -88,6 +98,7 @@ export const Contacts = () => {
                   className="btn"
                   data-bs-toggle="modal"
                   data-bs-target="#staticBackdrop"
+                  onClick={() => setCurrentContact(item)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +107,6 @@ export const Contacts = () => {
                     fill="currentColor"
                     className="bi bi-pencil"
                     viewBox="0 0 22 22"
-                    onClick={() => actions.editar(index)}
                   >
                     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
                   </svg>
@@ -144,6 +154,21 @@ export const Contacts = () => {
                                 value={store.titulo}
                                 placeholder={store.titulo}
                               />
+                              <label
+                                for="exampleInputAgendaId"
+                                className="form-label"
+                              >
+                                ID
+                              </label>
+                              <input
+                                type="agendaID"
+                                className="form-control"
+                                id="exampleInputAgendaId"
+                                key={index}
+                                value={currentContact.id}
+                                onChange={info}
+                                name="id"
+                              />
                             </div>
 
                             <div className="mb-3">
@@ -157,7 +182,8 @@ export const Contacts = () => {
                                 type="fullname"
                                 className="form-control"
                                 id="exampleInputFullName"
-                                value={data.name}
+                                key={index}
+                                value={currentContact.name}
                                 onChange={info}
                                 name="name"
                               />
@@ -174,7 +200,8 @@ export const Contacts = () => {
                                 className="form-control"
                                 id="exampleInputEmail1"
                                 aria-describedby="emailHelp"
-                                value={data.email}
+                                key={index}
+                                value={currentContact.email}
                                 onChange={info}
                                 name="email"
                               />
@@ -190,7 +217,8 @@ export const Contacts = () => {
                                 type="adress"
                                 className="form-control"
                                 id="exampleInputAdress"
-                                value={data.address}
+                                key={index}
+                                value={currentContact.address}
                                 onChange={info}
                                 name="address"
                               />
@@ -206,21 +234,14 @@ export const Contacts = () => {
                                 type="phone"
                                 className="form-control"
                                 id="exampleInputPhone1"
-                                value={data.phone}
+                                key={index}
+                                value={currentContact.phone}
                                 onChange={info}
                                 name="phone"
                               />
                             </div>
                             <div className="container text-center row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-                              <div className="col">
-                                <button
-                                  onClick={saveContact}
-                                  className="btn btn-outline-success"
-                                >
-                                  save
-                                </button>
-                              </div>
-                            </div>
+                           </div>
                           </form>
                         </p>
                       </div>
@@ -235,7 +256,10 @@ export const Contacts = () => {
                         <button
                           type="button"
                           className="btn btn-warning"
-                          onClick={() => actions.eliminar(index)}
+                          data-bs-dismiss="modal"
+                          onClick={() => {
+                            saveEditedContact();                      
+                          }}
                         >
                           Yes, edit it
                         </button>
@@ -249,6 +273,7 @@ export const Contacts = () => {
                   className="btn"
                   data-bs-toggle="modal"
                   data-bs-target="#staticBackdrop2"
+                  onClick={() => setCurrentContact(item)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -304,7 +329,10 @@ export const Contacts = () => {
                         <button
                           type="button"
                           className="btn btn-danger"
-                          onClick={() => actions.eliminar(index)}
+                          data-bs-dismiss="modal"
+                          onClick={() => {
+                            deletedContact();                      
+                          }}
                         >
                           Yes, erase it
                         </button>
@@ -323,7 +351,7 @@ export const Contacts = () => {
             className="btn btn-outline-success"
             onClick={actions.getContacts}
           >
-            Load contacts from
+            Update contacts from
           </button>
         </div>
         <div className="col">

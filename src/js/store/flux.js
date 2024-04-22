@@ -17,14 +17,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         {
           name: "Pedro",
           phone: "8486851515",
-          address: "calle 123",
           email: "ppp@asdasd.com",
+          address: "calle 123",
+          id: 1,
         },
       ],
 
       titulo: [],
       agendaname: [],
       agendas: [],
+      editedcontact: [],
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -32,17 +34,49 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().changeColor(0, "green");
       },
       printText: () => {},
-      eliminar: (indexToDelete) => {
+      eliminar: (editedContact) => {
         const store = getStore();
-        console.log("eliminado", indexToDelete);
-        setStore({
-          contacts: store.contacts.filter(
-            (contact, contactIndex) => contactIndex !== indexToDelete
-          ),
-        });
+        const requestOptions = {
+          method: "DELETE",
+          redirect: "follow"
+        };
+        
+        fetch(`https://playground.4geeks.com/contact/agendas/${store.titulo}/contacts/${editedContact.id}`, requestOptions)
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
       },
-      editar: () => {
+      putedit: (editedcontact) => {
+        const store = getStore();
         console.log("editando");
+        setStore({ editedcontact: store.contacts });
+        console.log("data:", editedcontact);
+
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = JSON.stringify({
+          name: editedcontact.name,
+          phone: editedcontact.phone,
+          email: editedcontact.email,
+          address: editedcontact.address,
+          id: 33,
+        });
+
+        const requestOptions = {
+          method: "PUT",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch(
+          `https://playground.4geeks.com/contact/agendas/${store.titulo}/contacts/${editedcontact.id}`,
+          requestOptions
+        )
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
       },
       createAgenda: (newuser) => {
         console.log("Agenda creada");
@@ -108,9 +142,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         )
           .then((response) => response.json())
           .then((result) => {
-            console.log(result);   
+            console.log(result);
             setStore({ contacts: result.contacts });
-
           })
           .catch((error) => console.error(error));
       },
@@ -142,6 +175,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((error) => console.error(error));
       },
+
       postContact: (titulo, data) => {
         console.log("agenda name:", titulo);
         console.log("data", data);

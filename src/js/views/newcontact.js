@@ -6,27 +6,30 @@ import "../../styles/home.css";
 export const Newcontact = () => {
   const { store, actions } = useContext(Context);
   const [data, setData] = useState({
-    name: "", 
-    phone: "", 
-    email: "", 
-    address: ""});
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+    id: "",
+  });
+
   const saveContact = (e) => {
     e.preventDefault();
     actions.postContact(store.titulo, data);
-  }
+  };
   console.log(store.titulo);
   const info = (e) => {
     setData({
       ...data,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
-  }
+  };
 
   return (
     <div className="text-start mt-5">
       <div className="container">
-         <form>
-         <div className="mb-3">
+        <form>
+          <div className="mb-3">
             <label for="exampleInputAgendaName" className="form-label">
               Agenda Name
             </label>
@@ -38,7 +41,7 @@ export const Newcontact = () => {
               placeholder={store.titulo}
             />
           </div>
-         
+
           <div className="mb-3">
             <label for="exampleInputFullName" className="form-label">
               Full name
@@ -93,16 +96,18 @@ export const Newcontact = () => {
             />
           </div>
           <div className="container text-center row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-              <div className="col">
-                <button onClick={saveContact} className="btn btn-outline-success">
-                  save
+            <div className="col">
+              <button onClick={saveContact} className="btn btn-outline-success">
+                save
+              </button>
+            </div>
+            <div className="col">
+              <Link to="/contacts">
+                <button className="btn btn-link">
+                  or get back to contacts
                 </button>
-              </div>
-              <div className="col">
-                <Link to="/contacts">
-                  <button className="btn btn-link">or get back to contacts</button>
-                </Link>          
-              </div>
+              </Link>
+            </div>
           </div>
         </form>
       </div>
