@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import "../../styles/demo.css";
+import { act } from "react-dom/test-utils";
 
 export const Contacts = () => {
   const { store, actions } = useContext(Context);
@@ -28,7 +29,14 @@ export const Contacts = () => {
     });
   };
 
+  useEffect(() => {
+    console.log("useEffect se activo")
+    actions.getContacts();
+  },[])
+
+
   console.log(currentContact)
+
 
   
   return (
@@ -89,7 +97,6 @@ export const Contacts = () => {
                     <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
                   </svg>
                   <p className="text-secondary">{item.email}</p>
-                  <p className="text-secondary">{item.id}</p>
                 </div>
               </div>
               <div className="ms-auto p-3">
@@ -166,7 +173,7 @@ export const Contacts = () => {
                                 id="exampleInputAgendaId"
                                 key={index}
                                 value={currentContact.id}
-                                onChange={info}
+                                placeholder={info}
                                 name="id"
                               />
                             </div>
@@ -345,21 +352,6 @@ export const Contacts = () => {
           );
         })}
       </ul>
-      <div className="container text-center row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-        <div className="col">
-          <button
-            className="btn btn-outline-success"
-            onClick={actions.getContacts}
-          >
-            Update contacts from
-          </button>
-        </div>
-        <div className="col">
-          <h3>
-            <strong>{store.titulo}</strong>
-          </h3>
-        </div>
-      </div>
     </div>
   );
 };

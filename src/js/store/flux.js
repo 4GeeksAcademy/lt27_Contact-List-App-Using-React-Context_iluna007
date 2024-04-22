@@ -43,7 +43,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         
         fetch(`https://playground.4geeks.com/contact/agendas/${store.titulo}/contacts/${editedContact.id}`, requestOptions)
           .then((response) => response.text())
-          .then((result) => console.log(result))
+          .then((result) => {
+            console.log(result);
+            getActions().getContacts();
+      })
           .catch((error) => console.error(error));
       },
       putedit: (editedcontact) => {
@@ -75,7 +78,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           requestOptions
         )
           .then((response) => response.text())
-          .then((result) => console.log(result))
+          .then((result) => {
+            console.log(result);
+            getActions().getContacts();
+          })
           .catch((error) => console.error(error));
       },
       createAgenda: (newuser) => {
